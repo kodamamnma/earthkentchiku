@@ -74,6 +74,26 @@
 		</div>
 
 
+
+
+		<div class="top__section2" style="margin: 120px 0 0px 0">
+			<div class="inview__fade wb__pageV">
+				<a href="https://www.earth-kenchiku-lp.com/lp2"><img src="<?php echo get_template_directory_uri(); ?>/img/LP画像_261120_pc1.webp" alt="11月28日開催 完成見学会のメイン画像" width="1536" height="864" loading="lazy"></a>
+			</div>
+
+			<div class="right__space" style="margin: 40px 0 20px 0;">
+				<div class="ts2__left">
+					<h2 class="ts__title"><span class="fra pc">RESERVATION</span>ご予約<span class="fra sp">RESERVATION</span></h2>
+					<p class="ts1__text2">「 SHIROMI TERRACE 」 は<br class="sp">ご予約制となっております。<br>以下のお問い合わせフォームより、<br class="sp">お気軽にご連絡ください。<br>女性スタッフが丁寧に<br class="sp">ご案内させていただきます。<br>アース建築の住まいづくりの世界を、<br class="sp">ぜひご自身の感覚でご体感ください。</p>
+
+					<div style="margin-top: 40px;"><a href="https://www.earth-kenchiku-lp.com/lp2" class="arrow__link fra">詳細はこちら<img src="https://55e-design.com/wp-content/themes/earth-theme/img/arrow.png" alt="リンク矢印イメージ"></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
 	</div>
 
 
