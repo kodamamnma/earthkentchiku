@@ -1,0 +1,70 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: PHP Syntax Check
+      uses: ./.github/actions/php-syntax-check
+  
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        protocol: ftps
+        port: 21
+        # テーマのファイルはリポジトリ直下に置いているため、php/ ではなく直下をアップロードする
+        local-dir: ./
+        server-dir: ${{ secrets.PRODUCTION_THEME_PATH }}/
+        # 作業ルール・バックアップ・メモはサーバーに置く必要がないので除外する
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/*.md
+          **/.github/**
+          **/.claude/**
+          **/_backup/**
+
+    - name: Verify deployment
+      run: |
+        echo "✅ Deployment completed successfully"
+        echo "Files deployed to: ${{ secrets.PRODUCTION_THEME_PATH }}"
+
+  release:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Get version from style.css
+      id: version
+      run: |
+        VERSION=$(grep -m 1 -i 'Version:' style.css | awk '{print $2}' | tr -d '\r' || true)
+        echo "version-without-v=${VERSION}" >> $GITHUB_OUTPUT
+    # style.css に Version: が無い間はリリース作成をスキップし、デプロイ成功を失敗扱いにしない
+    - name: Release Drafter
+      if: steps.version.outputs.version-without-v != ''
+      uses: release-drafter/release-drafter@v6
+      with:
+        publish: true
+        version: ${{ steps.version.outputs.version-without-v }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

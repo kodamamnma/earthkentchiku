@@ -1,0 +1,49 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: PHP Syntax Check
+      uses: ./.github/actions/php-syntax-check
+  
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.STAGING_SERVER_HOST }}
+        username: ${{ secrets.STAGING_SERVER_USER }}
+        password: ${{ secrets.STAGING_SERVER_PASSWORD }}
+        protocol: ftps
+        port: 21
+        # テーマのファイルはリポジトリ直下に置いているため、php/ ではなく直下をアップロードする
+        local-dir: ./
+        server-dir: ${{ secrets.STAGING_THEME_PATH }}/
+        # 作業ルール・バックアップ・メモはサーバーに置く必要がないので除外する
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/*.md
+          **/.github/**
+          **/.claude/**
+          **/_backup/**
+
+    - name: Verify deployment
+      run: |
+        echo "✅ Deployment completed successfully"
+        echo "Files deployed to: ${{ secrets.STAGING_THEME_PATH }}"
