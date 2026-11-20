@@ -605,6 +605,8 @@ h2.ts__title span{
 
 .about__left a img{
 	width: 100%;
+	/* img に width/height 属性を付けても縦に伸びないよう、比率を保つ */
+	height: auto;
 }
 
 .about__right{
@@ -2634,6 +2636,8 @@ footer{
 
 .wb__pageV img{
 	width: 100%;
+	/* img に width/height 属性を付けても縦に伸びないよう、比率を保つ */
+	height: auto;
 }
 
 .wb__pageV{
