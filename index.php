@@ -111,25 +111,6 @@
 
 			<div class="top__section6 top__section7">
 				<h2 class="ts__title"><span class="fra pc">TOUR</span>見学会・イベントについて<span class="fra sp">TOUR</span></h2>
-				
-				<div class="about__section">
-					<div class="about__flex right__space">
-						<div class="about__left">
-							<a href="https://www.earth-kenchiku-lp.com/">
-								<img src="<?php echo get_template_directory_uri(); ?>/img/LP画像_261027_pc1.avif" alt="イベントLPのメイン画像" loading="lazy">
-							</a>
-						</div>
-
-						<div class="about__right">
-							<h3>開催日時</h3>
-							<p class="ab__text">11月14日（土）〜23日（月）<br>10：00 〜 17：00</p>
-
-							<p class="right">
-							<a href="https://www.earth-kenchiku-lp.com/" class="arrow__link fra">VIEW MORE<img src="<?php echo get_template_directory_uri(); ?>/img/arrow.png"></a>
-							</p>
-						</div>
-					</div>
-				</div>
 
 				<!-- 見学会は開催順に下へ追加する。about__section ごと複製すると既存の上余白がそのまま効く -->
 				<div class="about__section">
